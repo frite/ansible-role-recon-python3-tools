@@ -12,6 +12,9 @@
     "{{ ansible_pkg_mgr }}_packages":
       - git
       - python3-pip
+      - python3-setuptools
+      - python2-setuptools
+      - python2-pip
   when: ansible_pkg_mgr == "yum" or ansible_pkg_mgr == "dnf"
 
 - name: Register packages for APT
@@ -19,6 +22,9 @@
     "{{ ansible_pkg_mgr }}_packages":
       - git
       - python3-pip
+      - python3-setuptools
+      - python-setuptools
+      - python-pip
   when: ansible_pkg_mgr == "apt"
 
 - name: Ensure required packages are installed
@@ -33,6 +39,12 @@
     force: true
   loop: "{{ py3_clone_tools|dict2items }}"
   when: py3_clone_tools is defined
+  changed_when: false
+
+- name: Install setuptools
+  pip:
+    name: setuptools
+    extra_args: --ignore-installed
   changed_when: false
 
 - name: Install setuptools
