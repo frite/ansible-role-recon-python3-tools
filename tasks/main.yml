@@ -40,6 +40,7 @@
     name: setuptools
     extra_args: --ignore-installed
     executable: pip3
+  changed_when: false
 
 - name: Install pip requirements
   pip:
